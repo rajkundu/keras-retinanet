@@ -13,3 +13,4 @@ tensorboard<1.15.0,>=1.14.0
 tensorflow-gpu<1.15.0
 xgboost
 pandas<=0.23.4,>=0.20.3
+natsort
