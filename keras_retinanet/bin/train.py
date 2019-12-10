@@ -452,7 +452,7 @@ def main(args=None):
 
     # optionally choose specific GPU
     if args.gpu:
-        setup_gpu(args.gpu)
+        setup_gpu(args.gpu, True)
 
     # optionally load config parameters
     if args.config:

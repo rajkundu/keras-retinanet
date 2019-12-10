@@ -19,7 +19,7 @@ import tensorflow as tf
 from .tf_version import tf_version_ok
 
 
-def setup_gpu(gpu_id):
+def setup_gpu(gpu_id, debug_gpu=False):
     if tf_version_ok((2, 0, 0)):
         if gpu_id == 'cpu' or gpu_id == -1:
             tf.config.experimental.set_visible_devices([], 'XLA_GPU')
@@ -48,6 +48,6 @@ def setup_gpu(gpu_id):
             return
 
         os.environ['CUDA_VISIBLE_DEVICES'] = str(gpu_id)
-        config = tf.ConfigProto(log_device_placement=True)
+        config = tf.ConfigProto(log_device_placement=debug_gpu)
         config.gpu_options.allow_growth = True
         tf.keras.backend.set_session(tf.Session(config=config))
