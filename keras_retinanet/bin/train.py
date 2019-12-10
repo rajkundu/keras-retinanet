@@ -410,7 +410,7 @@ def parse_args(args):
     parser.add_argument('--backbone',         help='Backbone model used by retinanet.', default='resnet50', type=str)
     parser.add_argument('--batch-size',       help='Size of the batches.', default=1, type=int)
     parser.add_argument('--gpu',              help='Id of the GPU to use (as reported by nvidia-smi).')
-    parser.add_argument('--debug-gpu',        help='Log device placement (note: extreme amount of output)', type=bool, dest="debug_gpu", default=0)
+    parser.add_argument('--debug-gpu',        help='Log device placement (note: extreme amount of output)', type=int, dest="debug_gpu", default=0)
     parser.add_argument('--multi-gpu',        help='Number of GPUs to use for parallel processing.', type=int, default=0)
     parser.add_argument('--multi-gpu-force',  help='Extra flag needed to enable (experimental) multi-gpu support.', action='store_true')
     parser.add_argument('--initial-epoch',    help='Epoch from which to begin the train, useful if resuming from snapshot.', type=int, default=0)
@@ -453,8 +453,7 @@ def main(args=None):
 
     # optionally choose specific GPU
     if args.gpu:
-        print('Debug GPU: ' + str(args.debug_gpu))
-        setup_gpu(args.gpu, args.debug_gpu)
+        setup_gpu(args.gpu, args.debug_gpu == 0)
 
     # optionally load config parameters
     if args.config:
