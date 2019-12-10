@@ -22,10 +22,10 @@ from .tf_version import tf_version_ok
 def setup_gpu(gpu_id):
     if tf_version_ok((2, 0, 0)):
         if gpu_id == 'cpu' or gpu_id == -1:
-            tf.config.experimental.set_visible_devices([], 'GPU')
+            tf.config.experimental.set_visible_devices([], 'XLA_GPU')
             return
 
-        gpus = tf.config.experimental.list_physical_devices('GPU')
+        gpus = tf.config.experimental.list_physical_devices('XLA_GPU')
         if gpus:
             # Restrict TensorFlow to only use the first GPU.
             try:
@@ -34,12 +34,12 @@ def setup_gpu(gpu_id):
                     tf.config.experimental.set_memory_growth(gpu, True)
 
                 # Use only the selcted gpu.
-                tf.config.experimental.set_visible_devices(gpus[int(gpu_id)], 'GPU')
+                tf.config.experimental.set_visible_devices(gpus[int(gpu_id)], 'XLA_GPU')
             except RuntimeError as e:
                 # Visible devices must be set before GPUs have been initialized.
                 print(e)
 
-            logical_gpus = tf.config.experimental.list_logical_devices('GPU')
+            logical_gpus = tf.config.experimental.list_logical_devices('XLA_GPU')
             print(len(gpus), "Physical GPUs,", len(logical_gpus), "Logical GPUs")
     else:
         import os
